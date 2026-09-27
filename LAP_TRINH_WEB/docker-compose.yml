@@ -1,0 +1,53 @@
+
+services:
+# 1. Nginx Web Server
+  nginx:
+    image: nginx:latest
+    container_name: web_nginx
+    ports:
+      - "80:80"
+      - "443:443"
+    volumes:
+      - ./nginx/html:/usr/share/nginx/html
+    restart: always
+
+  # 2. Node-RED
+  nodered:
+    image: nodered/node-red:latest
+    container_name: web_nodered
+    ports:
+      - "1880:1880"
+    volumes:
+      - ./nodered_data:/data
+    restart: always
+
+  # 3. MariaDB Database
+  mariadb:
+    image: mariadb:latest
+    container_name: web_mariadb
+    environment:
+      MYSQL_ROOT_PASSWORD: rootpassword123
+      MYSQL_DATABASE: web_db
+      MYSQL_USER: web_user
+      MYSQL_PASSWORD: userpassword123
+    volumes:
+      - ./mariadb_data:/var/lib/mysql
+    restart: always
+
+  # 4. phpMyAdmin
+  phpmyadmin:
+    image: phpmyadmin:latest
+    container_name: web_phpmyadmin
+    ports:
+      - "8080:80"
+    environment:
+      PMA_HOST: mariadb
+      MYSQL_ROOT_PASSWORD: rootpassword123
+    restart: always
+
+  # 5. Cloudflare Tunnel (Sẽ thêm token sau)
+  cloudflared:
+    image: cloudflare/cloudflared:latest
+    container_name: web_cloudflared
+    command: tunnel --no-autoupdate run
+    restart: always
