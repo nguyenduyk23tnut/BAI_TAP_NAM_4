@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Bài Tập Môn Lập Trình Web - Nhóm 4</title>
+    <style>
+        body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; background-color: #eef2f5; margin: 0; padding: 40px; display: flex; justify-content: center; }
+        .container { background: #ffffff; padding: 30px; border-radius: 12px; box-shadow: 0 8px 20px rgba(0,0,0,0.08); width: 100%; max-width: 500px; text-align: center; }
+        h1 { color: #0056b3; font-size: 22px; margin-bottom: 5px; }
+        p.sub { color: #6c757d; font-size: 14px; margin-top: 0; }
+        .btn-api { background-color: #007bff; color: white; border: none; padding: 12px 24px; font-size: 15px; font-weight: bold; border-radius: 6px; cursor: pointer; transition: 0.3s; width: 100%; margin-top: 15px; }
+        .btn-api:hover { background-color: #0056b3; }
+        #result { margin-top: 20px; text-align: left; }
+        .sv-card { background: #f8f9fa; border-left: 4px solid #007bff; padding: 10px 15px; margin-bottom: 10px; border-radius: 4px; }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>BÀI TẬP LẬP TRÌNH WEB - BÀI 2</h1>
+        <p class="sub">Sinh viên thực hiện: <b>Nguyễn Duy</b></p>
+        <hr style="border: 0; border-top: 1px solid #eee; margin: 20px 0;">
+        <button class="btn-api" onclick="loadData()">TẢI DANH SÁCH TỪ NODE-RED API (/api/engdi)</button>
+        <div id="result"></div>
+    </div>
+
+    <script>
+        function loadData() {
+            const resDiv = document.getElementById('result');
+            resDiv.innerHTML = '<p style="color:#6c757d; text-align:center;">Đang tải dữ liệu...</p>';
+            
+            // Đã đổi endpoint gọi sang /api/engdi
+            fetch('/api/engdi')
+                .then(response => response.json())
+                .then(data => {
+                    if(data.ok === 1) {
+                        let html = '<h3 style="color:#28a745; font-size:16px;">' + data.msg + '</h3>';
+                        data.dssv.forEach(sv => {
+                            html += `
+                                <div class="sv-card">
+                                    <strong>${sv.name}</strong><br>
+                                    <small>MSV: ${sv.msv} | Vai trò: ${sv.role}</small>
+                                </div>
+                            `;
+                        });
+                        resDiv.innerHTML = html;
+                    }
+                })
+                .catch(error => {
+                    console.error(error);
+                    resDiv.innerHTML = '<p style="color:#dc3545; text-align:center;">Lỗi kết nối tới API!</p>';
+                });
+        }
+    </script>
+</body>
+</html>

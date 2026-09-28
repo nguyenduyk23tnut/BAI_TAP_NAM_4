@@ -9,6 +9,7 @@ services:
       - "443:443"
     volumes:
       - ./nginx/html:/usr/share/nginx/html
+      - ./nginx/conf.d:/etc/nginx/conf.d
     restart: always
 
   # 2. Node-RED
@@ -45,9 +46,9 @@ services:
       MYSQL_ROOT_PASSWORD: rootpassword123
     restart: always
 
-  # 5. Cloudflare Tunnel (Sẽ thêm token sau)
+# 5. Cloudflare Tunnel
   cloudflared:
     image: cloudflare/cloudflared:latest
     container_name: web_cloudflared
-    command: tunnel --no-autoupdate run
+    command: tunnel --no-autoupdate run --token eyJhIjoiMDNlODUzMWQ1NzAzOWJmNTgxNDUzZGJmYWU4YzkwMWIiLCJ0IjoiNTkyZmE5MjctZjI1OC00YTk3LTgwMDktYWIwNjc1MmVjZmNmIiwicyI6Ik9EUm1OV1prWmpJdFkySmlaaTAwWVRFekxXSTFOamt0WTJWaU1XWXlOakpqWldZeCJ9
     restart: always
