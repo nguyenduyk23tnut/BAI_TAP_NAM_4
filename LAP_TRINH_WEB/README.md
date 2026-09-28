@@ -15,7 +15,7 @@
 **Thông tin sinh viên thực hiện:**
 - **Họ và tên:** Nguyễn Duy
 - **Mã sinh viên:** K235480106102
-- **Lớp / Nhóm:** Nhóm 4
+- **Lớp:** K59KMT
 - **Địa chỉ IP Server:** `192.168.199.137`
 - **Tên miền:** `laptrinhwebn4.id.vn` / `sub.laptrinhwebn4.id.vn`
 
